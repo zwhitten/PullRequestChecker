@@ -1,14 +1,13 @@
 package com.whitten.test;
 
 import com.whitten.test.model.GithubRepo;
-import com.whitten.test.model.PullRequest;
 import com.whitten.test.service.GithubService;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.List;
 
 /**
- * Hello world!
+ * Starting point of the application
  *
  */
 public class App 
@@ -19,21 +18,12 @@ public class App
         try {
             GithubService service = new GithubService();
             service.setAccessToken(accessToken);
-            GithubRepo[] repos = service.getOrganizationRepos("lodash");
 
-            if (repos != null) {
-                for (GithubRepo repo : repos) {
-                    PullRequest[] requests = service.getPullRequestsByRepo(repo.getUrl());
-                    if (requests != null) {
-                        repo.setPullRequests(Arrays.asList(requests));
-                    }
-
-                    System.out.println(repo.toString());
-                }
-            } else {
-                System.out.println("No Repos to report");
+            List<GithubRepo> repos = service.getOrganizationReposWithPullRequests("lodash");
+            // TODO: 11/22/17 any kind of processing on the resulting repo data
+            for (GithubRepo repo : repos) {
+                System.out.println(repo.getName() + " => " + repo.getPullRequests().size() + " PRs");
             }
-
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -3,6 +3,9 @@ package com.whitten.test.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * POJO representing the Github repository response JSON data
+ */
 public class GithubRepo {
 
     private String name;
